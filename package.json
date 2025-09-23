@@ -1,0 +1,42 @@
+{
+  "name": "nuxt-electron-boilerplate",
+  "description": "A boilerplate for building cross-platform desktop applications with Nuxt and Electron.",
+  "type": "module",
+  "private": false,
+  "main": "electron/dist/main.js",
+  "scripts": {
+    "build": "nuxt build && npm run electron:build",
+    "dev": "nuxt dev",
+    "electron:dev": "npm run electron:build && concurrently \"npm run dev\" \"wait-on http://localhost:3000 && cross-env NODE_ENV=development electron .\"",
+    "electron:build": "tsc --project tsconfig.electron.json",
+    "electron:pack": "electron-builder",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "electron": "npm run electron:build && electron .",
+    "app:build": "nuxt generate && npm run electron:build && npm run electron:pack"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.0.0",
+    "electron": "^38.1.2",
+    "electron-builder": "^26.0.12",
+    "nuxt": "^4.1.2",
+    "sass": "^1.93.1",
+    "typescript": "^5.9.2",
+    "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.example.nuxt-electron",
+    "productName": "Nuxtron",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "electron/dist/**",
+      ".output/public/**"
+    ]
+  }
+}
