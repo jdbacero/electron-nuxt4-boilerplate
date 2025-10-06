@@ -9,7 +9,11 @@ export default defineNuxtConfig({
   nitro: {
     preset: "static",
   },
-  app: {
-    baseURL: "./", // Use relative paths
+
+  // Runtime config for environment variables
+  runtimeConfig: {
+    public: {
+      socketUrl: process.env.NUXT_PUBLIC_SOCKET_URL || "http://localhost:3001",
+    },
   },
 });

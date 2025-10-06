@@ -1,28 +1,32 @@
-import { app, BrowserWindow } from "electron";
-import path from "path";
-import { fileURLToPath } from "url";
+const { app, BrowserWindow } = require("electron");
+const path = require("path");
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+export const preload = path.join(__dirname, "preload.cjs");
+export const url = process.env.VITE_DEV_SERVER_URL;
+export const indexHtml = path.join(
+  __dirname,
+  "..",
+  "..",
+  ".output",
+  "public",
+  "index.html"
+);
 
-const isDev = process.env.NODE_ENV === "development";
-
-function createWindow() {
+async function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
     webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-      preload: path.join(__dirname, "preload.js"), // Will be .js after build
+      preload,
     },
   });
 
-  if (isDev) {
-    mainWindow.loadURL("http://localhost:3000");
+  if (url) {
+    await mainWindow.loadURL(url);
+    // Open devTool if the app is not packaged
     mainWindow.webContents.openDevTools();
   } else {
-    mainWindow.loadFile(path.join(__dirname, "../.output/public/index.html"));
+    await mainWindow.loadFile(indexHtml);
   }
 }
 
