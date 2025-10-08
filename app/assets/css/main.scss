@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles and SCSS variables can go here */
+:root {
+  --primary-color: #007acc;
+  --secondary-color: #f0f0f0;
+}
+
+/* Example custom component styles */
+.btn-primary {
+  @apply bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded;
+}
+
+.btn-secondary {
+  @apply bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded;
+}
